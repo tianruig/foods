@@ -2,7 +2,7 @@ from django.db import models
 
 
 class MenuItem(models.Model):
-    food_name = models.CharField(max_length=255)
+    food_name = models.CharField(max_length=255, unique=True)
     rating = models.IntegerField(null=True, blank=True)
     time = models.IntegerField(default=0)
     #0 is breakfast, 1 is lunch, 2 is dinner
@@ -12,8 +12,19 @@ class MenuItem(models.Model):
 
 
 class DiningHall(models.Model):
-    menu_items = models.ManyToManyField(MenuItem)
-    dining_hall_name = models.CharField(max_length=100)
+    CR = 'CR'
+    CK = 'CK'
+    C3 = 'C3'
+    FH = 'FH'
+    dining_halls = (
+            (CR, 'Crossroads'),
+            (CK, 'Clark Kerr'),
+            (C3, 'Cafe 3'),
+            (FH, 'Foothill'),
+    )
+
+    menu_items = models.ManyToManyField(MenuItem, blank=True)
+    dining_hall_name = models.CharField(max_length=100, choices=dining_halls)
 
     def __str__(self):
         return self.dining_hall_name
