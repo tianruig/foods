@@ -13,17 +13,17 @@ def update(request):
 
     for hall in data['dining_halls']:
         for item in hall['breakfast_menu']:
-            itm = MenuItem(food_name=item['name'], time=0)
+            itm, created = MenuItem.objects.get_or_create(food_name=item['name'], defaults={'time': 0})
             itm.save()
             count += 1
 
         for item in hall['lunch_menu']:
-            itm = MenuItem(food_name=item['name'], time=1)
+            itm, created = MenuItem.objects.get_or_create(food_name=item['name'], defaults={'time': 1})
             itm.save()
             count += 1
 
         for item in hall['dinner_menu']:
-            itm = MenuItem(food_name=item['name'], time=2)
+            itm, created = MenuItem.objects.get_or_create(food_name=item['name'], defaults={'time': 2})
             itm.save()
             count += 1
 
