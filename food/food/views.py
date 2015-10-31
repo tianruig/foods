@@ -4,6 +4,21 @@ import json
 
 from .models import DiningHall, MenuItem
 
+def suggest(request):
+    def get_avg(lst):
+        sum = 0
+        count = 0
+        for i in lst:
+            if i.rating is not None:
+                sum += i.rating
+                count += 1
+        return sum / count if count != 0 else 0
+
+    ratings = {}
+    for dining_hall in DiningHall.objects.all():
+        ratings[dining_hall.name] = get_avg(dining_hall.menu_items.all())
+    return HttpResponse("You should go to {} because it has good food."
+            .format(max(ratings, key=lambda x: ratings[x])))
 
 def update(request):
     url = 'http://asuc-mobile.herokuapp.com/api/dining_halls'
@@ -43,5 +58,3 @@ def update(request):
             count += 1
 
     return HttpResponse("{} records updated".format(count))
-
-

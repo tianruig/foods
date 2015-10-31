@@ -19,5 +19,6 @@ from . import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^update/', views.update, name='update')
+    url(r'^update/', views.update, name='update'),
+    url(r'^suggest/', views.suggest, name='suggest'),
 ]
