@@ -12,21 +12,17 @@ class MenuItem(models.Model):
 
 
 class DiningHall(models.Model):
-    CR = 'CR'
-    CK = 'CK'
-    C3 = 'C3'
-    FH = 'FH'
     dining_halls = (
-            (CR, 'Crossroads'),
-            (CK, 'Clark Kerr'),
-            (C3, 'Cafe 3'),
-            (FH, 'Foothill'),
+            ('Crossroads', 'Crossroads'),
+            ('Clark Kerr', 'Clark Kerr'),
+            ('Cafe 3', 'Cafe 3'),
+            ('Foothill', 'Foothill'),
     )
 
     menu_items = models.ManyToManyField(MenuItem, blank=True)
-    dining_hall_name = models.CharField(max_length=100, choices=dining_halls)
+    name = models.CharField(max_length=100, choices=dining_halls)
 
     def __str__(self):
-        return self.dining_hall_name
+        return self.name
 
 
