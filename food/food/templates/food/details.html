@@ -1,0 +1,21 @@
+<h1>{{menuitem.food_name}}</h1>
+
+{% if error_message %}<p><strong>{{ error_message}}</strong></p>{% endif %}
+<p>The current rating for this item is: {{menuitem.rating}}</p>
+<form action="{% url 'rate' menuitem.id %}" method = "post">
+{% csrf_token %}
+<select name="rating">
+    <option value=0>0</option>
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    <option value=6>6</option>
+    <option value=7>7</option>
+    <option value=8>8</option>
+    <option value=9>9</option>
+    <option value=10>10</option>
+</select>
+<input type="submit" value="Submit" />
+</form>
