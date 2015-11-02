@@ -5,6 +5,7 @@
 <form action="{% url 'rate' menuitem.id %}" method = "post">
 {% csrf_token %}
 <select name="rating">
+    <option value=12>None</option>
     <option value=0>0</option>
     <option value=1>1</option>
     <option value=2>2</option>
@@ -17,5 +18,8 @@
     <option value=9>9</option>
     <option value=10>10</option>
 </select>
+<br>
 <input type="submit" value="Submit" />
+<br>
+<a href="{% url 'index' %}">Return to index without rating?</a>
 </form>

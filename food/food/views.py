@@ -34,7 +34,11 @@ class DetailView(generic.DetailView):
 
 def update_rating(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
-    menu_item.rating = request.POST['rating']
+    r = request.POST['rating']
+    if r == '12':
+        menu_item.rating = None
+    else:
+        menu_item.rating = r
     menu_item.save()
     #return HttpResponse("test")
     return HttpResponseRedirect("../../")
