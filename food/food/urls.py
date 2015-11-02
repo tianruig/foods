@@ -18,10 +18,16 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+<<<<<<< HEAD
     url(r'^admin/$', include(admin.site.urls)),
     url(r'^update/$', views.update, name='update'),
     url(r'^suggest/$', views.suggest, name='suggest'),
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     url(r'^$', views.index, name='index'),
     url(r'^(?P<menu_item_id>[0-9]+)/rate/$', views.update_rating, name = 'rate'),
+=======
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^update/', views.update, name='update'),
+    url(r'^suggest/', views.suggest, name='suggest'),
+>>>>>>> refs/remotes/origin/master
 ]

@@ -7,6 +7,7 @@ from django.template import RequestContext, loader
 from django.views import generic
 from .models import DiningHall, MenuItem
 
+<<<<<<< HEAD
 # def redirect(request):
 #      return HttpResponseRedirect('index')
 
@@ -43,6 +44,8 @@ def update_rating(request, menu_item_id):
     #return HttpResponse("test")
     return HttpResponseRedirect("../../")
 
+=======
+>>>>>>> refs/remotes/origin/master
 def suggest(request):
     def get_avg(lst):
         sum = 0
@@ -56,10 +59,15 @@ def suggest(request):
     ratings = {}
     for dining_hall in DiningHall.objects.all():
         ratings[dining_hall.name] = get_avg(dining_hall.menu_items.all())
+<<<<<<< HEAD
     response =  HttpResponse()
     response.write("You should go to {} because it has good food.".format(max(ratings, key=lambda x: ratings[x])))
     response.write("<br><a href='../'>Return to rating?</a>")
     return response
+=======
+    return HttpResponse("You should go to {} because it has good food."
+            .format(max(ratings, key=lambda x: ratings[x])))
+>>>>>>> refs/remotes/origin/master
 
 def update(request):
     url = 'http://asuc-mobile.herokuapp.com/api/dining_halls'
@@ -98,6 +106,10 @@ def update(request):
             itm.save()
             count += 1
 
+<<<<<<< HEAD
     response =  HttpResponse("{} records updated".format(count))
     response.write("<br><a href = '../'>Return to rating?</a>")
     return response
+=======
+    return HttpResponse("{} records updated".format(count))
+>>>>>>> refs/remotes/origin/master
