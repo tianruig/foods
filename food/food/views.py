@@ -1,8 +1,59 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from urllib.request import urlopen
 import json
-
+from django.shortcuts import render, get_object_or_404
+from django.core.urlresolvers import reverse
 from .models import DiningHall, MenuItem
+from django.views import generic
+
+# def redirect(request):
+#      return HttpResponseRedirect('index')
+
+def index(request):
+    response = HttpResponse("<h1>Rate foods!</h1>")
+    response.write("<a href='update/'>Update list of foods?</a><br>")
+    response.write("<ul>")
+    for menu_item in MenuItem.objects.all():
+        response.write("<li>")
+        w = menu_item.food_name
+        response.write("<a href = ")
+        response.write("{}".format(menu_item.id))
+        response.write(">")
+        response.write(w)
+        response.write("</a>")
+        response.write("</li>")
+    response.write("</ul>")
+    return response
+
+class DetailView(generic.DetailView):
+    model = MenuItem
+    template_name = 'food/details.html'
+    def get_queryset(self):
+        return MenuItem.objects.all()
+
+def update_rating(request, menu_item_id):
+    menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+    r = request.POST['rating']
+    if r == '12':
+        menu_item.rating = None
+    else:
+        menu_item.rating = r
+    menu_item.save()
+    #return HttpResponse("test")
+    return HttpResponseRedirect("../../")
+
+# class DetailView(generic.DetailView):
+#     model = MenuItem
+#     template_name = 'food/details.html'
+#     def get_queryset(self):
+#         return MenuItem.objects.all()
+
+# def update_rating(request, menu_item_id):
+#     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+#     menu_item.rating = request.POST['rating']
+#     menu_item.save()
+#     #return HttpResponse("test")
+#     return HttpResponseRedirect("../../")
 
 def suggest(request):
     def get_avg(lst):
@@ -17,8 +68,10 @@ def suggest(request):
     ratings = {}
     for dining_hall in DiningHall.objects.all():
         ratings[dining_hall.name] = get_avg(dining_hall.menu_items.all())
-    return HttpResponse("You should go to {} because it has good food."
-            .format(max(ratings, key=lambda x: ratings[x])))
+    response =  HttpResponse()
+    response.write("You should go to {} because it has good food.".format(max(ratings, key=lambda x: ratings[x])))
+    response.write("<br><a href='../'>Return to rating?</a>")
+    return response
 
 def update(request):
     url = 'http://asuc-mobile.herokuapp.com/api/dining_halls'
@@ -56,5 +109,6 @@ def update(request):
 
             itm.save()
             count += 1
-
-    return HttpResponse("{} records updated".format(count))
+        response =  HttpResponse("{} records updated".format(count))
+        response.write("<br><a href = '../'>Return to rating?</a>")
+        return response
