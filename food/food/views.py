@@ -12,6 +12,7 @@ from django.views import generic
 def index(request):
     response = HttpResponse("<h1>Rate foods!</h1>")
     response.write("<a href='update/'>Update list of foods?</a><br>")
+    response.write("<br><a href='suggest/'>Find out which dining hall has the best food for you!</a><br>")
     response.write("<ul>")
     for menu_item in MenuItem.objects.all():
         response.write("<li>")
