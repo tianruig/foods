@@ -6,9 +6,6 @@ from django.core.urlresolvers import reverse
 from .models import DiningHall, MenuItem
 from django.views import generic
 
-# def redirect(request):
-#      return HttpResponseRedirect('index')
-
 def index(request):
     response = HttpResponse("<h1>Rate foods!</h1>")
     response.write("<a href='update/'>Update list of foods?</a><br>")
